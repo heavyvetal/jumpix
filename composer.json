@@ -1,0 +1,13 @@
+{
+    "name": "vetal/swift_frame",
+    "description": "swift framework",
+    "require": {
+        "psr/container": "^2.0",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Psr\\Container\\": "vendor/psr/container/src/"
+        }
+    }
+}
