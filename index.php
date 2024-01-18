@@ -9,8 +9,12 @@ spl_autoload_register(function ($class_name) {
     require_once $class_name . '.php';
 });
 
-$dependecies = require_once __DIR__ . '/app/Container/Dependencies.php';
-$container = new \app\Container\Container($dependecies);
-$movieController = $container->get(\app\Controllers\MovieController::class);
-$movieController->index();
+use app\Http\Request;
+use \app\Controllers\MovieController;
 
+$dependencies = require_once __DIR__ . '/app/Container/Dependencies.php';
+
+$container = new \app\Container\Container($dependencies);
+$test = $container->get(Request::class);
+$movieController = $container->get(MovieController::class);
+$movieController->index();

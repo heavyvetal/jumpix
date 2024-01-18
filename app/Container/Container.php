@@ -4,11 +4,6 @@ namespace app\Container;
 
 use Psr\Container\ContainerInterface;
 use app\Container\Exceptions\NotFoundException;
-use app\Controllers\MovieController;
-use app\Http\Request;
-use app\Http\Session;
-use app\Models\Movie;
-use app\Models\PDOMediator;
 
 class Container implements ContainerInterface
 {
@@ -16,16 +11,7 @@ class Container implements ContainerInterface
 
     public function __construct($deps)
     {
-        $this->dependencies = [
-            Request::class => fn() => new Request(),
-            Session::class => fn() => new Session(),
-            MovieController::class => fn() => new MovieController(
-                $this->get(Request::class),
-                $this->get(Session::class)
-            ),
-            PDOMediator::class => fn() => new PDOMediator(DB_HOST, DB_NAME, DB_USER, DB_PASS),
-            Movie::class => fn() => new Movie($this->get(PDOMediator::class)),
-        ];
+        $this->dependencies = $deps;
     }
 
     public function has(string $id): bool
@@ -36,7 +22,7 @@ class Container implements ContainerInterface
     public function get(string $id): mixed
     {
         if ($this->has($id)) {
-            return $this->dependencies[$id]();
+            return call_user_func($this->dependencies[$id], $this);
         } else {
             throw NotFoundException::create($id);
         }
