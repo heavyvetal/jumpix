@@ -7,11 +7,22 @@ use app\Container\Exceptions\NotFoundException;
 
 class Container implements ContainerInterface
 {
+    private static $instance;
+
     private array $dependencies = [];
 
-    public function __construct($deps)
+    public function __construct($deps = [])
     {
         $this->dependencies = $deps;
+    }
+
+    public static function instance($deps = [])
+    {
+        if (self::$instance === null) {
+            self::$instance = new self($deps);
+        }
+
+        return self::$instance;
     }
 
     public function has(string $id): bool

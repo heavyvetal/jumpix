@@ -9,12 +9,11 @@ spl_autoload_register(function ($class_name) {
     require_once $class_name . '.php';
 });
 
-use app\Http\Request;
+use \app\Container\Container;
 use \app\Controllers\MovieController;
 
 $dependencies = require_once __DIR__ . '/app/Container/Dependencies.php';
 
-$container = new \app\Container\Container($dependencies);
-$test = $container->get(Request::class);
+$container = Container::instance($dependencies);
 $movieController = $container->get(MovieController::class);
 $movieController->index();
