@@ -9,7 +9,7 @@ class Container implements ContainerInterface
 {
     private static $instance;
 
-    private array $dependencies = [];
+    private $dependencies;
 
     public function __construct($deps = [])
     {
