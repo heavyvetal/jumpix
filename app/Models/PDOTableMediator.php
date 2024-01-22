@@ -2,15 +2,15 @@
 
 namespace app\Models;
 
-class PDOMediator implements DatabaseMediatorInterface
+class PDOTableMediator implements DatabaseMediatorInterface
 {
     private $connection;
 
     private $table;
 
-    public function __construct($host, $name, $user, $pass)
+    public function __construct($connection)
     {
-        $this->connection = new \PDO("mysql:host=$host;dbname=$name;charset=UTF8", $user, $pass);
+        $this->connection = $connection;
     }
 
     public function setTable($table)

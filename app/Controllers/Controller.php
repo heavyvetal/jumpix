@@ -58,7 +58,7 @@ abstract class Controller
             }
         }
 
-        require_once 'Views/' . $view . '.php';
+        require_once APPLICATION . 'resources/views/' . $view . '.php';
     }
 
     public function __call($name, $arguments)
