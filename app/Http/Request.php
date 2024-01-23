@@ -14,12 +14,12 @@ class Request
         $this->domain_addition = $domain_addition;
     }
 
-    public static function getUri()
+    public function getUri()
     {
         $request_uri = $_SERVER['REQUEST_URI'];
 
-        if (!DOMAIN_SYM) {
-            $request_uri = str_replace(DOMAIN_ADDITION, '', $request_uri);
+        if (!$this->domain_sym) {
+            $request_uri = str_replace($this->domain_addition, '', $request_uri);
         }
 
         return $request_uri;
