@@ -5,7 +5,7 @@ namespace app\Container;
 use Psr\Container\ContainerInterface;
 use app\Container\Exceptions\NotFoundException;
 
-class Container implements ContainerInterface
+final class Container implements ContainerInterface
 {
     private static $instance;
 
