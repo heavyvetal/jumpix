@@ -13,14 +13,6 @@ class Router
 
     public function getActionData($uri)
     {
-        $actionData  = [];
-
-        foreach ($this->routes as $route => $routeData) {
-            if ($route == $uri) {
-                $actionData = $routeData;
-            }
-        }
-
-        return $actionData;
+        return array_key_exists($uri, $this->routes) ? $this->routes[$uri] : [];
     }
 }
