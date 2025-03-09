@@ -10,12 +10,12 @@ abstract class Model
     protected $table;
 
     /**
-     * @var DatabaseMediatorInterface
+     * @var DatabaseAdapterInterface
      */
     protected $connector;
 
 
-    public function __construct(DatabaseMediatorInterface $connector)
+    public function __construct(DatabaseAdapterInterface $connector)
     {
         $this->connector = $connector;
 

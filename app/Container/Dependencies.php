@@ -6,8 +6,8 @@ use app\Controllers\MovieController;
 use app\Http\Router;
 use app\Models\Movie;
 use app\Models\Director;
-use app\Models\PDOTableMediator;
-use app\Models\PDOProxy;
+use app\Models\PDOAdapter;
+use app\Models\PDOConnection;
 
 return [
     Request::class => function ($container) {
@@ -16,19 +16,19 @@ return [
     Session::class => function ($container) {
         return new Session();
     },
-    PDOProxy::class => function ($container) {
-        $proxy = new PDOProxy();
+    PDOConnection::class => function ($container) {
+        $proxy = new PDOConnection();
 
         return $proxy::getInstance('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=UTF8', DB_USER, DB_PASS);
     },
-    PDOTableMediator::class => function ($container) {
-        return new PDOTableMediator($container->get(PDOProxy::class));
+    PDOAdapter::class => function ($container) {
+        return new PDOAdapter($container->get(PDOConnection::class));
     },
     Movie::class => function ($container) {
-        return new Movie($container->get(PDOTableMediator::class));
+        return new Movie($container->get(PDOAdapter::class));
     },
     Director::class => function ($container) {
-        return new Director($container->get(PDOTableMediator::class));
+        return new Director($container->get(PDOAdapter::class));
     },
     MovieController::class => function ($container) {
         return new MovieController(
