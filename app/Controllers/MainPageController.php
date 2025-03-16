@@ -13,7 +13,7 @@ class MainPageController extends Controller
 
     public function index()
     {
-        $url = ['home' => HOST . DOMAIN_ADDITION];
+        $url = ['home' => HOST . DOMAIN_ADDITION, 'application_path' => APPLICATION];
 
         $this->render('header', $url);
         $this->render('main_page', $url);

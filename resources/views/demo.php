@@ -1,25 +1,4 @@
-
-
-<style>
-    body {
-        background-color: #f8f9fa;
-        box-sizing: content-box;
-    }
-    .content {
-        padding: 50px 20px;
-    }
-    .code-block {
-        background-color: #343a40;
-        color: #f8f9fa;
-        border-radius: 5px;
-        font-family: monospace;
-        white-space: pre-wrap;
-        overflow-x: auto;
-    }
-    .subtitle {
-        margin-top: 30px;
-    }
-</style>
+<link rel="stylesheet" href="<?php echo $home; ?>/assets/css/usage.css">
 
 <div class="container content">
     <h1 class="text-center py-3">How to use Swift Framework?</h1>
