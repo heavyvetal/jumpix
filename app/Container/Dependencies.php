@@ -2,10 +2,10 @@
 
 use app\Http\Request;
 use app\Http\Session;
-use app\Controllers\MovieController;
+use app\Controllers\MainPageController;
+use app\Controllers\DemoController;
 use app\Http\Router;
-use app\Models\Movie;
-use app\Models\Director;
+use app\Models\MySQLAdapter;
 use app\Models\PDOAdapter;
 use app\Models\PDOConnection;
 
@@ -24,18 +24,19 @@ return [
     PDOAdapter::class => function ($container) {
         return new PDOAdapter($container->get(PDOConnection::class));
     },
-    Movie::class => function ($container) {
-        return new Movie($container->get(PDOAdapter::class));
+    MySQLAdapter::class => function ($container) {
+        return new MySQLAdapter(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     },
-    Director::class => function ($container) {
-        return new Director($container->get(PDOAdapter::class));
-    },
-    MovieController::class => function ($container) {
-        return new MovieController(
+    MainPageController::class => function ($container) {
+        return new MainPageController(
             $container->get(Request::class),
             $container->get(Session::class),
-            $container->get(Movie::class),
-            $container->get(Director::class),
+        );
+    },
+    DemoController::class => function ($container) {
+        return new DemoController(
+            $container->get(Request::class),
+            $container->get(Session::class),
         );
     },
     Router::class => function ($container) {

@@ -1,10 +1,16 @@
 <?php
 
-use app\Controllers\MovieController;
+use app\Controllers\MainPageController;
+use app\Controllers\DemoController;
 
 return $routes = [
     '/' => [
-        'controller' => MovieController::class,
+        'controller' => MainPageController::class,
+        'action' => 'index'
+    ],
+
+    '/usage' => [
+        'controller' => DemoController::class,
         'action' => 'index'
     ],
 ];
