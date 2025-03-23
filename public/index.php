@@ -14,9 +14,27 @@ $router = $container->get(\app\Http\Router::class);
 
 $actionData = $router->getActionData($request->getUri());
 
-if (!empty($actionData)) {
-    $controller = $container->get($actionData['controller']);
-    $action = $actionData['action'];
+try {
+    if (!empty($actionData)) {
+        $test = $actionData['controller'];
+        $controller = $container->get($actionData['controller']);
+        $action = $actionData['action'];
 
-    $controller->$action();
+        $controller->$action();
+    }
+} catch (PDOException $e) {
+    $error_info = getErrorInfo($e, 'Something went wrong with PDO connection');
+    include '../resources/views/errors/error.php';
+} catch (\Exception $e) {
+    $error_info = getErrorInfo($e, 'Something went wrong');
+    include '../resources/views/errors/error.php';
+}
+
+function getErrorInfo($e, $title) {
+    $error_info['title'] = $title;
+    $error_info['file'] = $e->getFile();
+    $error_info['line'] = $e->getLine();
+    $error_info['msg'] = $e->getMessage();
+
+    return $error_info;
 }

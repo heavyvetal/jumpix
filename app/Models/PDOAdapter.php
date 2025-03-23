@@ -5,7 +5,6 @@ namespace app\Models;
 class PDOAdapter implements DatabaseAdapterInterface
 {
     private $connection;
-
     private $table;
 
     public function __construct($connection)
@@ -18,83 +17,53 @@ class PDOAdapter implements DatabaseAdapterInterface
         $this->table = $table;
     }
 
+    private function _executeQuery($query, $params = [], $fetch = true)
+    {
+        try {
+            $statement = $this->connection->prepare($query);
+            $statement->execute($params);
+
+            return $fetch ? $statement->fetchAll($this->connection::FETCH_ASSOC) : null;
+        } catch (\PDOException $e) {
+            throw new \Exception("Database error: " . $e->getMessage());
+        }
+    }
+
     public function insertRecord($data)
     {
-        $query = "INSERT INTO $this->table (";
+        $columns = implode(',', array_keys($data));
+        $placeholders = implode(',', array_fill(0, count($data), '?'));
+        $query = "INSERT INTO $this->table ($columns) VALUES ($placeholders)";
 
-        $columns = array_keys($data);
-        $values = array_values($data);
-
-        foreach ($columns as $column) {
-            $query .= "$column";
-
-            if ($column != $columns[count($columns) - 1]){
-                $query .= ",";
-            }
-        }
-
-        $query .= ") VALUES (";
-
-        foreach ($values as $key => $value) {
-            $query .= "?";
-
-            if ($key != count($values) - 1){
-                $query .= ",";
-            }
-        }
-
-        $query .= ")";
-
-        $statement = $this->connection->prepare($query);
-        $statement->execute($values);
+        $this->_executeQuery($query, array_values($data), false);
     }
 
     public function selectRecord($column, $value)
     {
         $query = "SELECT * FROM $this->table WHERE $column=? LIMIT 1";
-        $statement = $this->connection->prepare($query);
-        $statement->execute([$value]);
-        $result_array = $statement->fetchAll($this->connection::FETCH_ASSOC);
+        $result = $this->_executeQuery($query, [$value]);
 
-        return $result_array[0];
+        return $result[0] ?? null;
     }
 
     public function selectAllRecords()
     {
         $query = "SELECT * FROM $this->table";
-        $result = $this->connection->query($query);
-        $result_array = $result->fetchAll($this->connection::FETCH_ASSOC);
-
-        return $result_array;
+        return $this->_executeQuery($query);
     }
 
     public function updateRecord($data, $column, $desiredValue)
     {
-        $values = array_values($data);
-        $values[] = $desiredValue;
+        $setClause = implode('=?, ', array_keys($data)) . '=?';
+        $query = "UPDATE $this->table SET $setClause WHERE $column=?";
 
-        $query = "UPDATE $this->table SET ";
-
-        foreach ($data as $key => $value) {
-            $query .= "$key=?";
-
-            if ($key != array_key_last($data)){
-                $query .= ",";
-            }
-        }
-
-        $query .= " WHERE $column=?";
-
-        $statement = $this->connection->prepare($query);
-        $statement->execute($values);
+        $params = array_merge(array_values($data), [$desiredValue]);
+        $this->_executeQuery($query, $params, false);
     }
 
     public function deleteRecord($column, $value)
     {
-        $query = "DELETE FROM $this->table WHERE $column=:value";
-
-        $statement = $this->connection->prepare($query);
-        $statement->bindParam(':value', $value, $this->connection::PARAM_INT);
-        $statement->execute();
+        $query = "DELETE FROM $this->table WHERE $column=?";
+        $this->_executeQuery($query, [$value], false);
     }
 }
