@@ -4,12 +4,17 @@ use app\Http\Request;
 use app\Http\Session;
 use app\Controllers\MainPageController;
 use app\Controllers\DemoController;
+use app\Controllers\TemplateEngineDemoController;
 use app\Http\Router;
 use app\Models\MySQLAdapter;
 use app\Models\PDOAdapter;
 use app\Models\PDOConnection;
+use app\Views\TemplateEngine;
 
 return [
+    Router::class => function ($container) {
+        return new Router(require_once APPLICATION . 'config/routes.php');
+    },
     Request::class => function ($container) {
         return new Request(DOMAIN_SYM, DOMAIN_ADDITION);
     },
@@ -39,7 +44,14 @@ return [
             $container->get(Session::class),
         );
     },
-    Router::class => function ($container) {
-        return new Router(require_once APPLICATION . 'config/routes.php');
+    TemplateEngine::class => function ($container) {
+        return new TemplateEngine();
+    },
+    TemplateEngineDemoController::class => function ($container) {
+        return new TemplateEngineDemoController(
+            $container->get(Request::class),
+            $container->get(Session::class),
+            $container->get(TemplateEngine::class)
+        );
     },
 ];

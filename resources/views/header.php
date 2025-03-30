@@ -21,6 +21,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $home; ?>/usage">How to use</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $home; ?>/template_engine_example">Template engine</a>
+            </li>
         </ul>
     </div>
 </nav>
