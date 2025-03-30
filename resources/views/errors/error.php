@@ -6,8 +6,6 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
             background-color: #f8f9fa;
         }
         h1 {
