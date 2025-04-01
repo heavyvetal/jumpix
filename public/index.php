@@ -21,6 +21,8 @@ try {
         $action = $actionData['action'];
 
         $controller->$action();
+    } else {
+        include '../resources/views/errors/404.php';
     }
 } catch (PDOException $e) {
     $error_info = getErrorInfo($e, 'Something went wrong with PDO connection');
@@ -35,6 +37,5 @@ function getErrorInfo($e, $title) {
     $error_info['file'] = $e->getFile();
     $error_info['line'] = $e->getLine();
     $error_info['msg'] = $e->getMessage();
-
     return $error_info;
 }
