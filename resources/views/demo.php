@@ -5,8 +5,8 @@
 <script>hljs.highlightAll();</script>
 
 <div class="container content">
-    <h1 class="text-center py-3">How to use Swift Framework?</h1>
-    <p>Swift Framework is built on the MVC concept. The entry point of the application is <code>public/index.php</code>.</p>
+    <h1 class="text-center py-3">How to use JumpPHP?</h1>
+    <p>JumpPHP Framework is built on the MVC concept. The entry point of the application is <code>public/index.php</code>.</p>
 
     <h2 class="subtitle">Configuration</h2>
     <p>Application settings are defined in <code>config/app.php</code>:</p>

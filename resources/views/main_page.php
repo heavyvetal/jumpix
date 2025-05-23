@@ -1,5 +1,5 @@
 <header class="hero">
-    <h1>Welcome to Swift Framework</h1>
+    <h1>Welcome to JumpPHP</h1>
     <p>Lightweight, flexible, and powerful PHP framework for rapid development.</p>
     <a href="<?php echo $home; ?>/usage" class="btn btn-lg btn-custom">Find Out More</a>
 </header>

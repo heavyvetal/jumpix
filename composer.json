@@ -1,6 +1,6 @@
 {
     "name": "vetal/swift_frame",
-    "description": "swift framework",
+    "description": "jump_php",
     "require": {
         "psr/container": "^2.0",
         "ext-pdo": "*"
