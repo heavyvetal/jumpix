@@ -1,6 +1,6 @@
-# JumpPHP
+# Jumpix
 
-JumpPHP is a minimalistic PHP framework based on the **MVC** architecture.  It focuses on simplicity, flexibility, and convenient web application development.
+Jumpix is a minimalistic PHP framework based on the **MVC** architecture.  It focuses on simplicity, flexibility, and convenient web application development.
 
 **Key Features**
 - Custom router for URL handling
@@ -137,7 +137,7 @@ class Movie extends Model
 ```
 
 ## Template Engine
-JumpPHP includes a simple template engine supporting variables, loops, and conditionals.
+Jumpix includes a simple template engine supporting variables, loops, and conditionals.
 
 Example template resources/views/test.php:
 ```html
